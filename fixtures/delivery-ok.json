@@ -1,0 +1,4 @@
+[
+  {"event_id":"parcel-1","event_at":"2026-12-05","kind":"parcel","parcel_id":"P1","order_id":"C1","batch_id":"B1","units":2,"dispatched_at":"2026-12-05","carrier":"carrier-1"},
+  {"event_id":"receipt-1","event_at":"2026-12-08","kind":"receipt","receipt_id":"R1","parcel_id":"P1","units":1,"receipt_type":"signed","received_at":"2026-12-08","witness":"consumer-1"}
+]
