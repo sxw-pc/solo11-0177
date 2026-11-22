@@ -1,0 +1,4 @@
+[
+  {"event_id":"receipt-early-2","event_at":"2026-12-09","kind":"receipt","receipt_id":"R3","parcel_id":"P1","units":1,"receipt_type":"signed","received_at":"2026-12-09","witness":"consumer-1"},
+  {"event_id":"receipt-early-return","event_at":"2026-12-09","kind":"receipt","receipt_id":"R4","parcel_id":"P1","units":1,"receipt_type":"returned","received_at":"2026-12-09","witness":"consumer-1"}
+]

@@ -1,0 +1,4 @@
+[
+  {"event_id":"lot-1","event_at":"2026-11-01","kind":"batch","batch_id":"B1","quantity":3,"certified_until":"2026-12-31","status":"good"},
+  {"event_id":"offer-1","event_at":"2026-11-01","kind":"offer","offer_id":"O1","version":1,"batch_id":"B1","capacity":3,"price":1000,"deposit":100,"due":"2026-12-10","deposit_deadline":"2026-11-25","tail_deadline":"2026-12-05","grace_days":2,"status":"active"}
+]
