@@ -1,0 +1,6 @@
+[
+  {"event_id":"offer-2","event_at":"2026-12-09","kind":"offer","offer_id":"O1","version":2,"batch_id":"B1","capacity":3,"price":1000,"deposit":100,"due":"2026-12-20","deposit_deadline":"2026-11-25","tail_deadline":"2026-12-05","grace_days":2,"status":"active"},
+  {"event_id":"lot-2","event_at":"2026-11-01","kind":"batch","batch_id":"B2","quantity":1,"certified_until":"2026-12-31","status":"good"},
+  {"event_id":"offer-c1","event_at":"2026-11-01","kind":"offer","offer_id":"O2","version":1,"batch_id":"B2","capacity":1,"price":900,"deposit":90,"due":"2026-12-10","deposit_deadline":"2026-11-25","tail_deadline":"2026-12-05","grace_days":1,"status":"active"},
+  {"event_id":"offer-c2","event_at":"2026-11-01","kind":"offer","offer_id":"O2","version":1,"batch_id":"B2","capacity":2,"price":900,"deposit":90,"due":"2026-12-10","deposit_deadline":"2026-11-25","tail_deadline":"2026-12-05","grace_days":1,"status":"active"}
+]
