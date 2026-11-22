@@ -1,7 +1,7 @@
 [
-  {"event_id":"order-1","event_at":"2026-11-02","kind":"order","order_id":"C1","offer_id":"O1","units":2,"placed_at":"2026-11-02"},
+  {"event_id":"order-1","event_at":"2026-11-02","kind":"order","order_id":"C1","offer_id":"O1","units":2,"placed_at":"2026-11-02","consumer":"consumer-1"},
   {"event_id":"pay-d1","event_at":"2026-11-03","kind":"payment","txid":"T1","order_id":"C1","stage":"deposit","amount":200,"paid_at":"2026-11-03"},
   {"event_id":"pay-t1","event_at":"2026-11-24","kind":"payment","txid":"T2","order_id":"C1","stage":"tail","amount":1800,"paid_at":"2026-11-24"},
-  {"event_id":"order-2","event_at":"2026-11-04","kind":"order","order_id":"C2","offer_id":"O1","units":2,"placed_at":"2026-11-04"},
+  {"event_id":"order-2","event_at":"2026-11-04","kind":"order","order_id":"C2","offer_id":"O1","units":2,"placed_at":"2026-11-04","consumer":"consumer-2"},
   {"event_id":"pay-d2","event_at":"2026-11-05","kind":"payment","txid":"T3","order_id":"C2","stage":"deposit","amount":200,"paid_at":"2026-11-05"}
 ]

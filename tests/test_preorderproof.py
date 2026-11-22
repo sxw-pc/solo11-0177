@@ -66,6 +66,17 @@ class PreorderProofTest(unittest.TestCase):
         self.assertEqual(result["order:C1"]["rights_status"], "new_due_unaccepted")
         self.assertGreater(result["order:C1"]["refund_due"], 0)
 
+    def test_unrelated_person_cannot_accept_revised_due(self):
+        self.normal()
+        self.put("offer", "offer-bad.json")
+        impostor = {"event_id": "consent-wrong", "event_at": "2026-12-09", "kind": "consent",
+                   "order_id": "C1", "due": "2026-12-20", "accepted_at": "2026-12-09",
+                   "consumer": "consumer-2"}
+        ingest(self.conn, "payment", [impostor])
+        result = report(self.conn)["decisions"]["order:C1"]
+        self.assertFalse(result["consent_ok"])
+        self.assertEqual(result["rights_status"], "new_due_unaccepted")
+
     def test_consent_reopens_delivery_right_without_erasing_history(self):
         self.normal()
         self.put("offer", "offer-bad.json")
@@ -135,6 +146,17 @@ class PreorderProofTest(unittest.TestCase):
         self.assertIn({"parcel_id": "P2", "reason": "wrong_batch"}, result["invalid_parcels"])
         self.assertEqual(result["delivered_units"], 0)
 
+    def test_other_consumer_receipt_does_not_settle_delivery(self):
+        self.put("offer", "offer-ok.json")
+        self.put("payment", "payment-ok.json")
+        parcel = fixture("delivery-ok.json")[0]
+        wrong_receipt = fixture("delivery-ok.json")[1]
+        wrong_receipt["witness"] = "consumer-2"
+        ingest(self.conn, "delivery", [parcel, wrong_receipt])
+        result = report(self.conn)["decisions"]["order:C1"]
+        self.assertEqual(result["delivered_units"], 0)
+        self.assertEqual(result["outstanding_units"], 2)
+
     def test_return_reopens_refund_and_compensation(self):
         self.normal()
         self.put("offer", "offer-bad.json")
@@ -162,7 +184,8 @@ class PreorderProofTest(unittest.TestCase):
         self.put("payment", "payment-ok.json")
         candidate = [
             {"event_id": "order-3", "event_at": "2026-11-06", "kind": "order",
-             "order_id": "C3", "offer_id": "O1", "units": 2, "placed_at": "2026-11-06"},
+             "order_id": "C3", "offer_id": "O1", "units": 2, "placed_at": "2026-11-06",
+             "consumer": "consumer-3"},
             {"event_id": "pay-d3", "event_at": "2026-11-06", "kind": "payment",
              "txid": "T6", "order_id": "C3", "stage": "deposit", "amount": 200,
              "paid_at": "2026-11-06"},

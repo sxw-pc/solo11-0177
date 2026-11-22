@@ -48,6 +48,8 @@ def fulfilment_accounts(conn, offers: dict[str, dict], orders: dict[str, dict], 
                 continue
             valid_parcels.append(parcel)
             for receipt in by_parcel[parcel["parcel_id"]]:
+                if receipt["witness"] != order["consumer"]:
+                    continue
                 if receipt["receipt_type"] == "signed":
                     signed += receipt["units"]
                 else:

@@ -17,7 +17,7 @@ def _unique_latest(items: list[dict], key: str, fields: tuple[str, ...]) -> tupl
 
 def order_accounts(conn, offers: dict[str, dict], as_of: str,
                    recovered_capacity: dict[str, int] | None = None) -> dict[str, dict]:
-    orders, order_conflicts = _unique_latest(rows(conn, "orders"), "order_id", ("offer_id", "units", "placed_at"))
+    orders, order_conflicts = _unique_latest(rows(conn, "orders"), "order_id", ("offer_id", "units", "placed_at", "consumer"))
     payments, payment_conflicts = _unique_latest(rows(conn, "payments"), "txid", ("order_id", "stage", "amount", "paid_at"))
     consent_rows = rows(conn, "consents")
     by_consent = defaultdict(list)
@@ -47,7 +47,7 @@ def order_accounts(conn, offers: dict[str, dict], as_of: str,
         consent_required = (offer_state["due_change_days"] > offer["grace_days"]
                             and order["placed_at"] < offer["event_at"])
         consent_ok = not consent_required or any(
-            c["due"] == offer["due"] and c["consumer"] not in {"merchant", ""}
+            c["due"] == offer["due"] and c["consumer"] == order["consumer"]
             and c["accepted_at"] <= offer["due"] for c in by_consent[order_id]
         )
         deposit_ok = deposit_sum >= deposit_due

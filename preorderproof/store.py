@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS restocks (
 );
 CREATE TABLE IF NOT EXISTS orders (
   event_id TEXT PRIMARY KEY, order_id TEXT NOT NULL, offer_id TEXT NOT NULL,
-  units INTEGER NOT NULL, placed_at TEXT NOT NULL
+  units INTEGER NOT NULL, placed_at TEXT NOT NULL, consumer TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS payments (
   event_id TEXT PRIMARY KEY, txid TEXT NOT NULL, order_id TEXT NOT NULL,
@@ -71,7 +71,7 @@ PROJECTIONS = {
               "due", "deposit_deadline", "tail_deadline", "grace_days", "status"),
     "batch": ("batches", "batch_id", "quantity", "certified_until", "status"),
     "restock": ("restocks", "review_id", "receipt_id", "batch_id", "units", "inspected_at", "outcome", "inspector"),
-    "order": ("orders", "order_id", "offer_id", "units", "placed_at"),
+    "order": ("orders", "order_id", "offer_id", "units", "placed_at", "consumer"),
     "payment": ("payments", "txid", "order_id", "stage", "amount", "paid_at"),
     "consent": ("consents", "order_id", "due", "accepted_at", "consumer"),
     "parcel": ("parcels", "parcel_id", "order_id", "batch_id", "units", "dispatched_at", "carrier"),
