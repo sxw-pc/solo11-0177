@@ -165,6 +165,21 @@ class PreorderProofTest(unittest.TestCase):
         self.assertEqual(result["recovered_capacity"], 0)
         self.assertIn(result["restock_reviews"][0]["status"], {"after_promise_due", "return_not_proven"})
 
+    def test_overcounted_return_cannot_be_restocked(self):
+        self.normal()
+        bad_return = {"event_id": "over-return", "event_at": "2026-12-09", "kind": "receipt",
+                      "receipt_id": "RX", "parcel_id": "P1", "units": 2,
+                      "receipt_type": "returned", "received_at": "2026-12-09",
+                      "witness": "consumer-1"}
+        ingest(self.conn, "delivery", [bad_return])
+        review = {"event_id": "over-review", "event_at": "2026-12-09", "kind": "restock",
+                  "review_id": "RVX", "receipt_id": "RX", "batch_id": "B1", "units": 2,
+                  "inspected_at": "2026-12-09", "outcome": "accepted", "inspector": "independent-qc-1"}
+        ingest(self.conn, "offer", [review])
+        result = report(self.conn)["decisions"]
+        self.assertTrue(result["order:C1"]["receipt_overcount"])
+        self.assertEqual(result["offer:O1"]["recovered_capacity"], 0)
+
     def test_replay_is_idempotent(self):
         first = self.put("offer", "offer-ok.json")
         second = self.put("offer", "offer-ok.json")

@@ -9,6 +9,8 @@ from .store import rows
 def inspected_returns(conn, offers: dict, rights: dict, fulfilment: dict) -> tuple[dict, dict, list]:
     available_returns = {}
     for order_id, decision in fulfilment.items():
+        if decision["receipt_overcount"]:
+            continue
         for item in decision["valid_returns"]:
             available_returns[item["receipt_id"]] = (order_id, item)
     by_review = defaultdict(list)
