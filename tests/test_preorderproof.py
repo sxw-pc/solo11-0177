@@ -157,6 +157,30 @@ class PreorderProofTest(unittest.TestCase):
         self.assertEqual(after["order:C1"]["restocked_units"], 1)
         self.assertEqual(after["order:C1"]["refund_due"], 1000)
 
+    def test_restock_promotes_paid_waitlist_across_all_three_ledgers(self):
+        self.put("offer", "offer-ok.json")
+        self.put("payment", "payment-ok.json")
+        candidate = [
+            {"event_id": "order-3", "event_at": "2026-11-06", "kind": "order",
+             "order_id": "C3", "offer_id": "O1", "units": 2, "placed_at": "2026-11-06"},
+            {"event_id": "pay-d3", "event_at": "2026-11-06", "kind": "payment",
+             "txid": "T6", "order_id": "C3", "stage": "deposit", "amount": 200,
+             "paid_at": "2026-11-06"},
+            {"event_id": "pay-t3", "event_at": "2026-12-04", "kind": "payment",
+             "txid": "T7", "order_id": "C3", "stage": "tail", "amount": 1800,
+             "paid_at": "2026-12-04"},
+        ]
+        ingest(self.conn, "payment", candidate)
+        self.put("delivery", "delivery-ok.json")
+        self.put("delivery", "delivery-recovery.json")
+        before = report(self.conn)["decisions"]["order:C3"]
+        self.assertEqual(before["rights_status"], "paid_waitlist")
+        self.put("offer", "offer-restock.json")
+        after = report(self.conn)["decisions"]
+        self.assertEqual(after["order:C3"]["rights_status"], "ready_to_dispatch")
+        self.assertEqual(after["offer:O1"]["unallocated_capacity"], 0)
+        self.assertEqual(after["order:C1"]["refund_due"], 1000)
+
     def test_unproven_or_late_restock_never_increases_capacity(self):
         self.normal()
         self.put("delivery", "delivery-bad.json")
