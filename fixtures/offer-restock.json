@@ -1,0 +1,3 @@
+[
+  {"event_id":"restock-1","event_at":"2026-12-09","kind":"restock","review_id":"RV1","receipt_id":"R4","batch_id":"B1","units":1,"inspected_at":"2026-12-09","outcome":"accepted","inspector":"independent-qc-1"}
+]
