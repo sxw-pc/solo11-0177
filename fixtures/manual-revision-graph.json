@@ -1,0 +1,795 @@
+{
+  "product": {
+    "product": "p1",
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "current_edition": "v2",
+    "manual_title": "Wireless Earbuds Pro Manual"
+  },
+  "themes": [
+    {
+      "uid": "theme-battery-safety",
+      "title": "Battery safety",
+      "parent": null
+    },
+    {
+      "uid": "theme-charging",
+      "title": "Charging",
+      "parent": "theme-battery-safety"
+    },
+    {
+      "uid": "theme-storage",
+      "title": "Battery storage",
+      "parent": "theme-battery-safety"
+    },
+    {
+      "uid": "theme-setup",
+      "title": "Setup",
+      "parent": null
+    },
+    {
+      "uid": "theme-warranty",
+      "title": "Warranty",
+      "parent": null
+    },
+    {
+      "uid": "theme-cleaning",
+      "title": "Cleaning",
+      "parent": null
+    },
+    {
+      "uid": "theme-disposal",
+      "title": "Disposal",
+      "parent": null
+    },
+    {
+      "uid": "theme-disposal-local",
+      "title": "Local disposal rules",
+      "parent": "theme-disposal"
+    }
+  ],
+  "sections": [
+    {
+      "uid": "sec-v1-en-7",
+      "edition": "v1",
+      "language": "en",
+      "number": "7",
+      "title": "Battery safety",
+      "theme_uid": "theme-battery-safety",
+      "printed_pages": [
+        "pdf-v1-en-p12"
+      ]
+    },
+    {
+      "uid": "sec-v1-en-3",
+      "edition": "v1",
+      "language": "en",
+      "number": "3",
+      "title": "Setup",
+      "theme_uid": "theme-setup",
+      "printed_pages": [
+        "pdf-v1-en-p05"
+      ]
+    },
+    {
+      "uid": "sec-v1-en-13",
+      "edition": "v1",
+      "language": "en",
+      "number": "13",
+      "title": "Disposal",
+      "theme_uid": "theme-disposal-local",
+      "printed_pages": [
+        "pdf-v1-en-p20"
+      ]
+    },
+    {
+      "uid": "sec-v1-zh-7",
+      "edition": "v1",
+      "language": "zh",
+      "number": "7",
+      "title": "电池安全",
+      "theme_uid": "theme-battery-safety",
+      "printed_pages": [
+        "pdf-v1-zh-p12"
+      ]
+    },
+    {
+      "uid": "sec-v1-zh-3",
+      "edition": "v1",
+      "language": "zh",
+      "number": "3",
+      "title": "设置",
+      "theme_uid": "theme-setup",
+      "printed_pages": [
+        "pdf-v1-zh-p05"
+      ]
+    },
+    {
+      "uid": "sec-v2-en-7",
+      "edition": "v2",
+      "language": "en",
+      "number": "7",
+      "title": "Warranty",
+      "theme_uid": "theme-warranty",
+      "printed_pages": [
+        "web-v2-en-p10"
+      ]
+    },
+    {
+      "uid": "sec-v2-en-8",
+      "edition": "v2",
+      "language": "en",
+      "number": "8",
+      "title": "Battery safety: charging",
+      "theme_uid": "theme-charging",
+      "printed_pages": [
+        "web-v2-en-p11"
+      ]
+    },
+    {
+      "uid": "sec-v2-en-10",
+      "edition": "v2",
+      "language": "en",
+      "number": "10",
+      "title": "Battery safety: storage",
+      "theme_uid": "theme-storage",
+      "printed_pages": [
+        "web-v2-en-p13"
+      ]
+    },
+    {
+      "uid": "sec-v2-en-14",
+      "edition": "v2",
+      "language": "en",
+      "number": "14",
+      "title": "Disposal",
+      "theme_uid": "theme-disposal-local",
+      "printed_pages": [
+        "web-v2-en-p16"
+      ]
+    },
+    {
+      "uid": "sec-v2-zh-7",
+      "edition": "v2",
+      "language": "zh",
+      "number": "7",
+      "title": "清洁",
+      "theme_uid": "theme-cleaning",
+      "printed_pages": [
+        "web-v2-zh-p10"
+      ]
+    },
+    {
+      "uid": "sec-v2-zh-9",
+      "edition": "v2",
+      "language": "zh",
+      "number": "9",
+      "title": "电池安全：充电",
+      "theme_uid": "theme-charging",
+      "printed_pages": [
+        "web-v2-zh-p12"
+      ]
+    },
+    {
+      "uid": "sec-v2-zh-12",
+      "edition": "v2",
+      "language": "zh",
+      "number": "12",
+      "title": "电池安全：存放",
+      "theme_uid": "theme-storage",
+      "printed_pages": [
+        "web-v2-zh-p15"
+      ]
+    }
+  ],
+  "revisions": [
+    {
+      "revision_id": "rev-1",
+      "edition": "v2",
+      "language": "en",
+      "relation": "reuse",
+      "from_theme_uid": "theme-battery-safety",
+      "to_theme_uids": [
+        "theme-warranty"
+      ],
+      "from_section_uids": [
+        "sec-v1-en-7"
+      ],
+      "to_section_uids": [
+        "sec-v2-en-7"
+      ],
+      "note": "Printed number 7 was reassigned to Warranty; the battery chapter was split away.",
+      "signed_by": "supplier-doc-lead",
+      "digest": "f81f9956a0663f814be2c36ba37eff669300ed37fe590cbee3b3ec2da1c9f71d"
+    },
+    {
+      "revision_id": "rev-2",
+      "edition": "v2",
+      "language": "en",
+      "relation": "split",
+      "from_theme_uid": "theme-battery-safety",
+      "to_theme_uids": [
+        "theme-charging",
+        "theme-storage"
+      ],
+      "from_section_uids": [
+        "sec-v1-en-7"
+      ],
+      "to_section_uids": [
+        "sec-v2-en-8",
+        "sec-v2-en-10"
+      ],
+      "note": "v1 #7 contained charging and storage; v2 splits them into #8 and #10.",
+      "signed_by": "supplier-doc-lead",
+      "digest": "89e6f0a266bf24a595099bf9351ed5c7791a1e1d92148f309e0d38312ce3bbae"
+    },
+    {
+      "revision_id": "rev-3",
+      "edition": "v2",
+      "language": "zh",
+      "relation": "reuse",
+      "from_theme_uid": "theme-battery-safety",
+      "to_theme_uids": [
+        "theme-cleaning"
+      ],
+      "from_section_uids": [
+        "sec-v1-zh-7"
+      ],
+      "to_section_uids": [
+        "sec-v2-zh-7"
+      ],
+      "note": "中文旧编号 7 在 v2 被清洁章节占用。",
+      "signed_by": "supplier-doc-lead",
+      "digest": "0ba2e0a3cdfc503c399455d57d15e02da143fada1cde6886fd2c3ba67a911654"
+    },
+    {
+      "revision_id": "rev-4",
+      "edition": "v2",
+      "language": "zh",
+      "relation": "split",
+      "from_theme_uid": "theme-battery-safety",
+      "to_theme_uids": [
+        "theme-charging",
+        "theme-storage"
+      ],
+      "from_section_uids": [
+        "sec-v1-zh-7"
+      ],
+      "to_section_uids": [
+        "sec-v2-zh-9",
+        "sec-v2-zh-12"
+      ],
+      "note": "v1 #7 拆为 v2 充电 #9 与存放 #12。",
+      "signed_by": "supplier-doc-lead",
+      "digest": "28f0d77556fec0edfd36c8ea25e9fb4a1747bd25940c6cd6f02ee693b343b42a"
+    },
+    {
+      "revision_id": "rev-5",
+      "edition": "v2",
+      "language": "en",
+      "relation": "merge",
+      "from_theme_uid": "theme-disposal",
+      "to_theme_uids": [
+        "theme-disposal-local"
+      ],
+      "from_section_uids": [
+        "sec-v1-en-13"
+      ],
+      "to_section_uids": [
+        "sec-v2-en-14"
+      ],
+      "note": "Regional disposal subsections merged into one local-rules chapter.",
+      "signed_by": "supplier-doc-lead",
+      "digest": "ed66d4e765c0cd950771b4b2f6f5e71a6f4ea55429407900458706a590576539"
+    }
+  ],
+  "qrcodes": [
+    {
+      "qr_code": "m1:7",
+      "offer_id": "O1",
+      "edition": "v1",
+      "language": "en",
+      "section_uid": "sec-v1-en-7",
+      "printed_page": "packaging-v1-en-box-flap",
+      "source_page_id": "pdf-v1-en-p12",
+      "printed_ref": "number:7"
+    },
+    {
+      "qr_code": "m1:7",
+      "offer_id": "O1",
+      "edition": "v1",
+      "language": "zh",
+      "section_uid": "sec-v1-zh-7",
+      "printed_page": "packaging-v1-zh-box-flap",
+      "source_page_id": "pdf-v1-zh-p12",
+      "printed_ref": "number:7"
+    },
+    {
+      "qr_code": "m2:8",
+      "offer_id": "O2",
+      "edition": "v2",
+      "language": "en",
+      "section_uid": "sec-v2-en-8",
+      "printed_page": "packaging-v2-en-box-flap",
+      "source_page_id": "web-v2-en-p11",
+      "printed_ref": "theme:theme-charging"
+    },
+    {
+      "qr_code": "m2:9",
+      "offer_id": "O2",
+      "edition": "v2",
+      "language": "zh",
+      "section_uid": "sec-v2-zh-9",
+      "printed_page": "packaging-v2-zh-box-flap",
+      "source_page_id": "web-v2-zh-p12",
+      "printed_ref": "theme:theme-charging"
+    },
+    {
+      "qr_code": "m2:bad-number",
+      "offer_id": "O2",
+      "edition": "v2",
+      "language": "en",
+      "section_uid": "sec-v2-en-10",
+      "printed_page": "packaging-v2-en-box-flap-rework",
+      "source_page_id": "web-v2-en-p13",
+      "printed_ref": "number:10"
+    }
+  ],
+  "body_links": [
+    {
+      "link_id": "bl-v1-en-setup-battery",
+      "edition": "v1",
+      "language": "en",
+      "section_uid": "sec-v1-en-7",
+      "url": "https://manual.example/archive/v1/en/body.html#sec-7",
+      "source_page_id": "pdf-v1-en-p05",
+      "source_anchor": "setup-battery-href"
+    },
+    {
+      "link_id": "bl-v1-zh-setup-battery",
+      "edition": "v1",
+      "language": "zh",
+      "section_uid": "sec-v1-zh-7",
+      "url": "https://manual.example/archive/v1/zh/body.html#sec-7",
+      "source_page_id": "pdf-v1-zh-p05",
+      "source_anchor": "setup-battery-href"
+    },
+    {
+      "link_id": "bl-v2-en-loop",
+      "edition": "v2",
+      "language": "en",
+      "section_uid": "sec-v2-en-10",
+      "url": "https://manual.example/v2/en/loop-a.html",
+      "source_page_id": "web-v2-en-p13",
+      "source_anchor": "storage-loop-href"
+    },
+    {
+      "link_id": "bl-v2-en-dead-anchor",
+      "edition": "v2",
+      "language": "en",
+      "section_uid": "sec-v2-en-8",
+      "url": "https://manual.example/v2/en/charging.html#sec-99",
+      "source_page_id": "web-v2-en-p11",
+      "source_anchor": "charging-missing-href"
+    },
+    {
+      "link_id": "bl-v2-en-cross-language",
+      "edition": "v2",
+      "language": "en",
+      "section_uid": "sec-v2-en-8",
+      "url": "https://manual.example/v2/zh/storage.html#sec-12",
+      "source_page_id": "web-v2-en-p11",
+      "source_anchor": "charging-cross-lang-href"
+    },
+    {
+      "link_id": "bl-v2-zh-gone",
+      "edition": "v2",
+      "language": "zh",
+      "section_uid": "sec-v2-zh-12",
+      "url": "https://manual.example/v2/zh/withdrawn.html",
+      "source_page_id": "web-v2-zh-p15",
+      "source_anchor": "storage-withdrawn-href"
+    }
+  ],
+  "routes": [
+    {
+      "route_id": "rt-a-en",
+      "qr_code": "m1:7",
+      "strategy": "archive",
+      "language": "en",
+      "first_url": "https://manual.example/archive/v1/en/body.html#sec-7",
+      "status": "active",
+      "supersedes": "",
+      "entries": [
+        {
+          "theme_uid": "theme-charging",
+          "url": "https://manual.example/v2/en/charging.html#sec-8"
+        },
+        {
+          "theme_uid": "theme-storage",
+          "url": "https://manual.example/v2/en/storage.html#sec-10"
+        }
+      ]
+    },
+    {
+      "route_id": "rt-a-zh",
+      "qr_code": "m1:7",
+      "strategy": "archive",
+      "language": "zh",
+      "first_url": "https://manual.example/archive/v1/zh/body.html#sec-7",
+      "status": "active",
+      "supersedes": "",
+      "entries": [
+        {
+          "theme_uid": "theme-charging",
+          "url": "https://manual.example/v2/zh/charging.html#sec-9"
+        },
+        {
+          "theme_uid": "theme-storage",
+          "url": "https://manual.example/v2/zh/storage.html#sec-12"
+        }
+      ]
+    },
+    {
+      "route_id": "rt-b-en",
+      "qr_code": "m1:7",
+      "strategy": "index",
+      "language": "en",
+      "first_url": "https://manual.example/v2/en/battery-index.html",
+      "status": "active",
+      "supersedes": "",
+      "entries": [
+        {
+          "theme_uid": "theme-charging",
+          "url": "https://manual.example/v2/en/charging.html#sec-8"
+        },
+        {
+          "theme_uid": "theme-storage",
+          "url": "https://manual.example/v2/en/storage.html#sec-10"
+        }
+      ]
+    },
+    {
+      "route_id": "rt-b-zh",
+      "qr_code": "m1:7",
+      "strategy": "index",
+      "language": "zh",
+      "first_url": "https://manual.example/v2/zh/battery-index.html",
+      "status": "active",
+      "supersedes": "",
+      "entries": [
+        {
+          "theme_uid": "theme-charging",
+          "url": "https://manual.example/v2/zh/charging.html#sec-9"
+        },
+        {
+          "theme_uid": "theme-storage",
+          "url": "https://manual.example/v2/zh/storage.html#sec-12"
+        }
+      ]
+    },
+    {
+      "route_id": "rt-bad-single-en",
+      "qr_code": "m1:7",
+      "strategy": "forbidden_silent_single",
+      "language": "en",
+      "first_url": "https://manual.example/v2/en/charging.html#sec-8",
+      "status": "rejected",
+      "supersedes": "",
+      "entries": []
+    }
+  ],
+  "pages": [
+    {
+      "page_id": "pdf-v1-en-p05",
+      "source": "supplier_pdf",
+      "language": "en",
+      "edition": "v1",
+      "url": "https://manual.example/v1/en/body.html",
+      "http_status": "200",
+      "digest": "9df23b6c0e7d6c754102aaef3ee4259a5f8ab2c55efda4b869d917263fb43049",
+      "anchors": [
+        {
+          "anchor": "sec-3",
+          "theme_uid": "theme-setup",
+          "title": "Setup"
+        }
+      ],
+      "links": [
+        {
+          "url": "https://manual.example/archive/v1/en/body.html#sec-7",
+          "theme_uid": "theme-battery-safety"
+        }
+      ]
+    },
+    {
+      "page_id": "pdf-v1-en-p12",
+      "source": "supplier_pdf",
+      "language": "en",
+      "edition": "v1",
+      "url": "https://manual.example/archive/v1/en/body.html",
+      "http_status": "200",
+      "digest": "6f1c869d0540ad2b1c568160b7d52f1e16502556175992e3883faf32272a7d0a",
+      "anchors": [
+        {
+          "anchor": "sec-7",
+          "theme_uid": "theme-battery-safety",
+          "title": "Battery safety"
+        }
+      ],
+      "links": [
+        {
+          "url": "https://manual.example/v2/en/charging.html#sec-8",
+          "theme_uid": "theme-charging"
+        },
+        {
+          "url": "https://manual.example/v2/en/storage.html#sec-10",
+          "theme_uid": "theme-storage"
+        }
+      ]
+    },
+    {
+      "page_id": "pdf-v1-zh-p05",
+      "source": "supplier_pdf",
+      "language": "zh",
+      "edition": "v1",
+      "url": "https://manual.example/v1/zh/body.html",
+      "http_status": "200",
+      "digest": "7810bc11e1f7873f69a83c95db22ac92ab4a7ad117d6dbf55cbcb682e4e6d080",
+      "anchors": [
+        {
+          "anchor": "sec-3",
+          "theme_uid": "theme-setup",
+          "title": "设置"
+        }
+      ],
+      "links": [
+        {
+          "url": "https://manual.example/archive/v1/zh/body.html#sec-7",
+          "theme_uid": "theme-battery-safety"
+        }
+      ]
+    },
+    {
+      "page_id": "pdf-v1-zh-p12",
+      "source": "supplier_pdf",
+      "language": "zh",
+      "edition": "v1",
+      "url": "https://manual.example/archive/v1/zh/body.html",
+      "http_status": "200",
+      "digest": "5ff8a044e49e512b53db345ca6499622528d82ea9b08b4fde990b6e87299500a",
+      "anchors": [
+        {
+          "anchor": "sec-7",
+          "theme_uid": "theme-battery-safety",
+          "title": "电池安全"
+        }
+      ],
+      "links": [
+        {
+          "url": "https://manual.example/v2/zh/charging.html#sec-9",
+          "theme_uid": "theme-charging"
+        },
+        {
+          "url": "https://manual.example/v2/zh/storage.html#sec-12",
+          "theme_uid": "theme-storage"
+        }
+      ]
+    },
+    {
+      "page_id": "web-v2-en-p10",
+      "source": "supplier_web",
+      "language": "en",
+      "edition": "v2",
+      "url": "https://manual.example/v2/en/warranty.html",
+      "http_status": "200",
+      "digest": "d38161d6de435cc49f1c85d2e11e4e37edc127961487bb65d60d4a9caeb04e4d",
+      "anchors": [
+        {
+          "anchor": "sec-7",
+          "theme_uid": "theme-warranty",
+          "title": "Warranty"
+        }
+      ],
+      "links": []
+    },
+    {
+      "page_id": "web-v2-en-p11",
+      "source": "supplier_web",
+      "language": "en",
+      "edition": "v2",
+      "url": "https://manual.example/v2/en/charging.html",
+      "http_status": "200",
+      "digest": "59bb1fe5e515d9fa193a986e1b151d48130152af0333798b70e57dbcc6faf450",
+      "anchors": [
+        {
+          "anchor": "sec-8",
+          "theme_uid": "theme-charging",
+          "title": "Battery safety: charging"
+        }
+      ],
+      "links": [
+        {
+          "url": "https://manual.example/v2/en/charging.html#sec-99",
+          "theme_uid": ""
+        },
+        {
+          "url": "https://manual.example/v2/zh/storage.html#sec-12",
+          "theme_uid": "theme-storage"
+        }
+      ]
+    },
+    {
+      "page_id": "web-v2-en-p13",
+      "source": "supplier_web",
+      "language": "en",
+      "edition": "v2",
+      "url": "https://manual.example/v2/en/storage.html",
+      "http_status": "200",
+      "digest": "012bd9a356a73c06d2abd607e4b5e38ea4bf80e4a0009f8e48162e29fdab5c7f",
+      "anchors": [
+        {
+          "anchor": "sec-10",
+          "theme_uid": "theme-storage",
+          "title": "Battery safety: storage"
+        }
+      ],
+      "links": [
+        {
+          "url": "https://manual.example/v2/en/loop-a.html",
+          "theme_uid": ""
+        }
+      ]
+    },
+    {
+      "page_id": "web-v2-en-p16",
+      "source": "supplier_web",
+      "language": "en",
+      "edition": "v2",
+      "url": "https://manual.example/v2/en/disposal.html",
+      "http_status": "200",
+      "digest": "94d25d03a783e8d4d50c3a2c33df6a8f6c4112125dc1a59544b17b99696cf887",
+      "anchors": [
+        {
+          "anchor": "sec-14",
+          "theme_uid": "theme-disposal-local",
+          "title": "Disposal"
+        }
+      ],
+      "links": []
+    },
+    {
+      "page_id": "web-v2-zh-p10",
+      "source": "supplier_web",
+      "language": "zh",
+      "edition": "v2",
+      "url": "https://manual.example/v2/zh/cleaning.html",
+      "http_status": "200",
+      "digest": "88bfeb46d5b919cacc8fc959cf73dd76300ecb1ee52ac351704ee8955f692fae",
+      "anchors": [
+        {
+          "anchor": "sec-7",
+          "theme_uid": "theme-cleaning",
+          "title": "清洁"
+        }
+      ],
+      "links": []
+    },
+    {
+      "page_id": "web-v2-zh-p12",
+      "source": "supplier_web",
+      "language": "zh",
+      "edition": "v2",
+      "url": "https://manual.example/v2/zh/charging.html",
+      "http_status": "200",
+      "digest": "a081f80e97fda547a34b2d38a25a102159a08815b49f04412c4f24216ca31d94",
+      "anchors": [
+        {
+          "anchor": "sec-9",
+          "theme_uid": "theme-charging",
+          "title": "电池安全：充电"
+        }
+      ],
+      "links": []
+    },
+    {
+      "page_id": "web-v2-zh-p15",
+      "source": "supplier_web",
+      "language": "zh",
+      "edition": "v2",
+      "url": "https://manual.example/v2/zh/storage.html",
+      "http_status": "200",
+      "digest": "4f1f5004b50b64631b996dd1925cd3c623449c7309299e5cdc4941e0049c5ef7",
+      "anchors": [
+        {
+          "anchor": "sec-12",
+          "theme_uid": "theme-storage",
+          "title": "电池安全：存放"
+        }
+      ],
+      "links": [
+        {
+          "url": "https://manual.example/v2/zh/withdrawn.html",
+          "theme_uid": ""
+        }
+      ]
+    },
+    {
+      "page_id": "web-v2-en-index",
+      "source": "qr_landing_rpa",
+      "language": "en",
+      "edition": "v2",
+      "url": "https://manual.example/v2/en/battery-index.html",
+      "http_status": "200",
+      "digest": "b78543887cde16d0519fc8737823ed45ac3cbbca3a6fb24d1f6e1fd2aaaca682",
+      "anchors": [],
+      "links": [
+        {
+          "url": "https://manual.example/v2/en/charging.html#sec-8",
+          "theme_uid": "theme-charging"
+        },
+        {
+          "url": "https://manual.example/v2/en/storage.html#sec-10",
+          "theme_uid": "theme-storage"
+        }
+      ]
+    },
+    {
+      "page_id": "web-v2-zh-index",
+      "source": "qr_landing_rpa",
+      "language": "zh",
+      "edition": "v2",
+      "url": "https://manual.example/v2/zh/battery-index.html",
+      "http_status": "200",
+      "digest": "28e65813f648e4b8ffa9ceeaee89abd8022b83c260f740792bf8d6f814485361",
+      "anchors": [],
+      "links": [
+        {
+          "url": "https://manual.example/v2/zh/charging.html#sec-9",
+          "theme_uid": "theme-charging"
+        },
+        {
+          "url": "https://manual.example/v2/zh/storage.html#sec-12",
+          "theme_uid": "theme-storage"
+        }
+      ]
+    },
+    {
+      "page_id": "web-v2-en-loop-a",
+      "source": "qr_landing_rpa",
+      "language": "en",
+      "edition": "v2",
+      "url": "https://manual.example/v2/en/loop-a.html",
+      "http_status": "200",
+      "digest": "04e065b40a288b7282f93b75a981e78529c1e81e7453f30820d945c17999f195",
+      "anchors": [],
+      "redirects_to": "https://manual.example/v2/en/loop-b.html",
+      "links": []
+    },
+    {
+      "page_id": "web-v2-en-loop-b",
+      "source": "qr_landing_rpa",
+      "language": "en",
+      "edition": "v2",
+      "url": "https://manual.example/v2/en/loop-b.html",
+      "http_status": "200",
+      "digest": "dfbd0be053b85f5252788b7f647e6129155b091c488365c9851b19b5f44700d2",
+      "anchors": [],
+      "redirects_to": "https://manual.example/v2/en/loop-a.html",
+      "links": []
+    },
+    {
+      "page_id": "web-v2-zh-gone",
+      "source": "supplier_web",
+      "language": "zh",
+      "edition": "v2",
+      "url": "https://manual.example/v2/zh/withdrawn.html",
+      "http_status": "410",
+      "digest": "2b29e85fe62db77e8cf1e040db6b924e8e950ed8cfb35ccf7e2d0bb650144980",
+      "anchors": [],
+      "links": []
+    }
+  ]
+}

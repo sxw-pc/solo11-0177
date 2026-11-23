@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from datetime import date
 
-from .store import KIND_SUBSYSTEM, PROJECTIONS
+from .store import KIND_SUBSYSTEM, MANUAL_PROJECTIONS, OPTIONAL_FIELDS, PROJECTIONS
 
 
 def _date(value: object, label: str) -> None:
@@ -15,19 +15,32 @@ def _date(value: object, label: str) -> None:
         raise ValueError(f"{label} must be ISO date") from exc
 
 
+NUMERIC_FIELDS = {"capacity", "price", "deposit", "version", "grace_days",
+                  "quantity", "units", "amount"}
+
+
 def validate_event(event: object, subsystem: str) -> None:
     if not isinstance(event, dict):
         raise ValueError("event must be a JSON object")
     kind = event.get("kind")
     if KIND_SUBSYSTEM.get(kind) != subsystem:
         raise ValueError(f"kind {kind!r} is not accepted by {subsystem}")
-    required = {"event_id", "event_at", "kind", *PROJECTIONS[kind][1:]}
+    spec = MANUAL_PROJECTIONS.get(kind) or PROJECTIONS[kind]
+    optional = OPTIONAL_FIELDS.get(kind, set())
+    required = {"event_id", "event_at", "kind",
+                *[col for col in spec[1:] if col not in optional]}
     missing = required - event.keys()
     if missing:
         raise ValueError(f"missing {kind} fields: {sorted(missing)}")
-    for key in required - {"kind", "event_at", "capacity", "price", "deposit", "version",
-                            "grace_days", "quantity", "units", "amount"}:
+    for key in ("event_id", "event_at", "kind"):
         if not isinstance(event[key], str) or not event[key].strip():
+            raise ValueError(f"{key} must be nonempty text")
+    for key in spec[1:]:
+        if key in NUMERIC_FIELDS or key not in event:
+            continue
+        if not isinstance(event[key], str):
+            raise ValueError(f"{key} must be text")
+        if key not in optional and not event[key].strip():
             raise ValueError(f"{key} must be nonempty text")
     for key in ("event_at", "due", "deposit_deadline", "tail_deadline", "certified_until",
                 "placed_at", "paid_at", "accepted_at", "dispatched_at", "received_at", "inspected_at"):
@@ -61,3 +74,14 @@ def validate_event(event: object, subsystem: str) -> None:
             raise ValueError("invalid receipt type")
         if event["witness"] == "merchant":
             raise ValueError("merchant cannot witness consumer receipt")
+    elif kind == "manual_page":
+        if event["source"] not in {"supplier_pdf", "supplier_web", "ocr_toc",
+                                   "qr_landing_rpa", "late_scan"}:
+            raise ValueError("invalid manual page source")
+    elif kind == "manual_revision" and event["relation"] not in {"split", "merge", "rename", "reuse"}:
+        raise ValueError("invalid manual revision relation")
+    elif kind == "manual_route":
+        if event["strategy"] not in {"archive", "index", "forbidden_silent_single"}:
+            raise ValueError("invalid manual route strategy")
+        if event["status"] not in {"active", "superseded", "rejected"}:
+            raise ValueError("invalid manual route status")
