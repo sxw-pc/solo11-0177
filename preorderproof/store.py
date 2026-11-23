@@ -58,13 +58,33 @@ CREATE TABLE IF NOT EXISTS decision_history (
   subject TEXT NOT NULL, revision INTEGER NOT NULL, decision TEXT NOT NULL,
   evidence_hash TEXT NOT NULL, PRIMARY KEY(subject, revision)
 );
+CREATE TABLE IF NOT EXISTS campaign_plans (
+  event_id TEXT PRIMARY KEY, experiment_id TEXT NOT NULL, sampling_unit TEXT NOT NULL,
+  stats_cutoff TEXT NOT NULL, locked_at TEXT NOT NULL, assignment_root TEXT NOT NULL,
+  signature TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS campaign_pages (
+  event_id TEXT PRIMARY KEY, experiment_id TEXT NOT NULL, arm TEXT NOT NULL,
+  cohort TEXT NOT NULL, cursor TEXT NOT NULL, stats_cutoff TEXT NOT NULL,
+  sampling_unit TEXT NOT NULL, signature TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS campaign_reports (
+  subject TEXT NOT NULL, revision INTEGER NOT NULL, report TEXT NOT NULL,
+  report_hash TEXT NOT NULL, supersedes TEXT NOT NULL, evidence_hash TEXT NOT NULL,
+  PRIMARY KEY(subject, revision)
+);
 """
 
 KIND_SUBSYSTEM = {
     "offer": "offer", "batch": "offer", "restock": "offer", "order": "payment",
     "payment": "payment", "consent": "payment", "parcel": "delivery",
-    "receipt": "delivery",
+    "receipt": "delivery", "campaign_plan": "campaign",
+    "assignment_page": "campaign", "exposure_page": "campaign",
+    "order_page": "campaign", "page_cancel": "campaign", "page_reissue": "campaign",
 }
+
+_PAGE_PROJECTION = ("campaign_pages", "experiment_id", "arm", "cohort", "cursor",
+                    "stats_cutoff", "sampling_unit", "signature")
 
 PROJECTIONS = {
     "offer": ("offers", "offer_id", "version", "batch_id", "capacity", "price", "deposit",
@@ -76,6 +96,13 @@ PROJECTIONS = {
     "consent": ("consents", "order_id", "due", "accepted_at", "consumer"),
     "parcel": ("parcels", "parcel_id", "order_id", "batch_id", "units", "dispatched_at", "carrier"),
     "receipt": ("receipts", "receipt_id", "parcel_id", "units", "receipt_type", "received_at", "witness"),
+    "campaign_plan": ("campaign_plans", "experiment_id", "sampling_unit", "stats_cutoff",
+                      "locked_at", "assignment_root", "signature"),
+    "assignment_page": _PAGE_PROJECTION,
+    "exposure_page": _PAGE_PROJECTION,
+    "order_page": _PAGE_PROJECTION,
+    "page_cancel": _PAGE_PROJECTION,
+    "page_reissue": _PAGE_PROJECTION,
 }
 
 
@@ -145,6 +172,7 @@ def record_decisions(conn: sqlite3.Connection, decisions: dict[str, dict]) -> No
 def ingest(conn: sqlite3.Connection, subsystem: str, events: list[dict]) -> dict:
     from .validate import validate_event
     from .decisions import evaluate
+    from .campaign import record_reports
 
     if not isinstance(events, list) or not events:
         raise ValueError("input must be a nonempty JSON event list")
@@ -168,5 +196,6 @@ def ingest(conn: sqlite3.Connection, subsystem: str, events: list[dict]) -> dict
             inserted += 1
         project(conn)
         record_decisions(conn, evaluate(conn))
+        record_reports(conn)
     return {"inserted": inserted, "replayed": replayed, "decisions":
             conn.execute("SELECT COUNT(*) FROM current_decisions").fetchone()[0]}
