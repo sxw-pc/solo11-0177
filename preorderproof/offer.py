@@ -7,6 +7,17 @@ from datetime import date
 from .store import rows
 
 
+def offer_versions(conn) -> dict[str, list[dict]]:
+    """All offer versions per offer id, ascending by version — for migration tracing."""
+    versions = defaultdict(list)
+    for row in rows(conn, "offers"):
+        versions[row["offer_id"]].append(row)
+    return {
+        offer_id: sorted(group, key=lambda x: (x["version"], x["event_at"], x["event_id"]))
+        for offer_id, group in versions.items()
+    }
+
+
 def offer_accounts(conn) -> dict[str, dict]:
     versions = defaultdict(list)
     for row in rows(conn, "offers"):

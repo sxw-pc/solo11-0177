@@ -1,0 +1,340 @@
+{
+  "canonical_v1_offer_sha256": "310baff22a60fe24b301bcbe27c591f5c3e40a862a67c3c9d3673bdcbfe1c2a5",
+  "packages": {
+    "contract_a_quarantine": {
+      "file_id": "pages-a4-quarantine",
+      "identity_contract": "reused_external_id",
+      "pages": [
+        {
+          "page_cursor": 0,
+          "producer_revision": 1,
+          "rows": [
+            {
+              "batch_id": "B1",
+              "capacity": 3,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "event_at": "2026-11-04",
+              "event_id": "offer-9",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O9",
+              "price_cents": 1000,
+              "schema_version": 2,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 1
+            },
+            {
+              "batch_id": "B1",
+              "capacity": 3,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "due_date": "2026-12-10",
+              "event_at": "2026-11-01",
+              "event_id": "offer-1",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O1",
+              "price_cents": 1000,
+              "schema_version": 2,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 1
+            },
+            {
+              "batch_id": "B1",
+              "capacity": 3,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "due_date": "2026-12-10",
+              "event_at": "2026-11-01",
+              "event_id": "offer-1",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O1",
+              "price_cents": 1000,
+              "schema_version": 2,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 1
+            }
+          ],
+          "schema_version": 2
+        },
+        {
+          "page_cursor": 1,
+          "producer_revision": 2,
+          "producer_signature": "sig-merchant-alpha-rev2",
+          "rows": [
+            {
+              "batch_id": "B1",
+              "capacity": 4,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "due_date": "2026-12-12",
+              "event_at": "2026-11-05",
+              "event_id": "offer-1",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O1",
+              "price_cents": 1000,
+              "schema_version": 2,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 2
+            },
+            {
+              "batch_id": "B1",
+              "capacity": 5,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "due_date": "2026-12-12",
+              "event_at": "2026-11-05",
+              "event_id": "offer-1",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O1",
+              "price_cents": 1000,
+              "schema_version": 2,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 2
+            }
+          ],
+          "schema_version": 2
+        }
+      ],
+      "producer": "merchant-alpha",
+      "schema_version": 2
+    },
+    "contract_a_signed_revision": {
+      "file_id": "pages-a2-signed-revision",
+      "identity_contract": "reused_external_id",
+      "pages": [
+        {
+          "page_cursor": 0,
+          "producer_revision": 2,
+          "producer_signature": "sig-merchant-alpha-rev2",
+          "rows": [
+            {
+              "batch_id": "B1",
+              "capacity": 3,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "due_date": "2026-12-12",
+              "event_at": "2026-11-02",
+              "event_id": "offer-1",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O1",
+              "price_cents": 1000,
+              "schema_version": 2,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 2
+            }
+          ],
+          "schema_version": 2,
+          "supersedes": "310baff22a60fe24b301bcbe27c591f5c3e40a862a67c3c9d3673bdcbfe1c2a5"
+        }
+      ],
+      "producer": "merchant-alpha",
+      "schema_version": 2
+    },
+    "contract_a_synonym": {
+      "file_id": "pages-a1-synonym",
+      "identity_contract": "reused_external_id",
+      "pages": [
+        {
+          "page_cursor": 0,
+          "producer_revision": 1,
+          "rows": [
+            {
+              "batch_id": "B1",
+              "capacity": 3,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "due_date": "2026-12-10",
+              "event_at": "2026-11-01",
+              "event_id": "offer-1",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O1",
+              "price_cents": 1000,
+              "schema_version": 2,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 1
+            }
+          ],
+          "schema_version": 2
+        }
+      ],
+      "producer": "merchant-alpha",
+      "schema_version": 2
+    },
+    "contract_a_unsigned_reuse": {
+      "file_id": "pages-a3-unsigned-reuse",
+      "identity_contract": "reused_external_id",
+      "pages": [
+        {
+          "page_cursor": 0,
+          "producer_revision": 1,
+          "rows": [
+            {
+              "batch_id": "B1",
+              "capacity": 3,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "due_date": "2026-12-12",
+              "event_at": "2026-11-03",
+              "event_id": "offer-1",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O1",
+              "price_cents": 1000,
+              "schema_version": 2,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 2
+            }
+          ],
+          "schema_version": 2
+        }
+      ],
+      "producer": "merchant-alpha",
+      "schema_version": 2
+    },
+    "contract_b_unique_id": {
+      "file_id": "pages-b1-unique-id",
+      "identity_contract": "unique_external_id",
+      "pages": [
+        {
+          "page_cursor": 0,
+          "producer_revision": 1,
+          "producer_signature": "sig-merchant-bravo-reissue",
+          "rows": [
+            {
+              "batch_id": "B1",
+              "capacity": 3,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "due_date": "2026-12-12",
+              "event_at": "2026-11-06",
+              "event_id": "offer-3",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O1",
+              "price_cents": 1000,
+              "schema_version": 2,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 2
+            }
+          ],
+          "schema_version": 2
+        },
+        {
+          "page_cursor": 1,
+          "producer_revision": 1,
+          "rows": [
+            {
+              "batch_id": "B1",
+              "capacity": 3,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "due_date": "2026-12-12",
+              "event_at": "2026-11-07",
+              "event_id": "offer-1",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O1",
+              "price_cents": 1000,
+              "schema_version": 2,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 2
+            }
+          ],
+          "schema_version": 2
+        },
+        {
+          "page_cursor": 2,
+          "producer_revision": 2,
+          "producer_signature": "sig-merchant-bravo-rev2",
+          "rows": [
+            {
+              "batch_id": "B1",
+              "capacity": 3,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "due_date": "2026-12-12",
+              "event_at": "2026-11-08",
+              "event_id": "offer-1",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O1",
+              "price_cents": 1000,
+              "schema_version": 2,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 2
+            }
+          ],
+          "schema_version": 2,
+          "supersedes": "310baff22a60fe24b301bcbe27c591f5c3e40a862a67c3c9d3673bdcbfe1c2a5"
+        }
+      ],
+      "producer": "merchant-bravo",
+      "schema_version": 2
+    },
+    "v1_pages": {
+      "file_id": "pages-v1-baseline",
+      "identity_contract": "reused_external_id",
+      "pages": [
+        {
+          "page_cursor": 0,
+          "producer_revision": 1,
+          "rows": [
+            {
+              "batch_id": "B1",
+              "certified_until": "2026-12-31",
+              "event_at": "2026-11-01",
+              "event_id": "lot-1",
+              "kind": "batch",
+              "quantity": 3,
+              "status": "good"
+            }
+          ],
+          "schema_version": 1
+        },
+        {
+          "page_cursor": 1,
+          "producer_revision": 1,
+          "rows": [
+            {
+              "batch_id": "B1",
+              "capacity": 3,
+              "deposit": 100,
+              "deposit_deadline": "2026-11-25",
+              "due": "2026-12-10",
+              "event_at": "2026-11-01",
+              "event_id": "offer-1",
+              "grace_days": 2,
+              "kind": "offer",
+              "offer_id": "O1",
+              "price": 1000,
+              "status": "active",
+              "tail_deadline": "2026-12-05",
+              "version": 1
+            }
+          ],
+          "schema_version": 1
+        }
+      ],
+      "producer": "merchant-alpha",
+      "schema_version": 1
+    }
+  }
+}

@@ -58,6 +58,47 @@ CREATE TABLE IF NOT EXISTS decision_history (
   subject TEXT NOT NULL, revision INTEGER NOT NULL, decision TEXT NOT NULL,
   evidence_hash TEXT NOT NULL, PRIMARY KEY(subject, revision)
 );
+-- Dual-layer v1/v2 ingestion: raw receipt ledger, producer identity map, and quarantine.
+CREATE TABLE IF NOT EXISTS ingest_generations (
+  generation_id TEXT PRIMARY KEY, file_hash TEXT NOT NULL UNIQUE,
+  envelope TEXT NOT NULL, status TEXT NOT NULL, received_at TEXT NOT NULL,
+  bytes_path TEXT, package_sha256 TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS raw_receipts (
+  receipt_id TEXT PRIMARY KEY, generation_id TEXT NOT NULL
+    REFERENCES ingest_generations(generation_id),
+  page_cursor INTEGER NOT NULL, row_no INTEGER NOT NULL, producer TEXT NOT NULL,
+  producer_revision INTEGER NOT NULL, producer_signature TEXT,
+  schema_version INTEGER NOT NULL, raw_body TEXT NOT NULL,
+  raw_sha256 TEXT NOT NULL, received_at TEXT NOT NULL,
+  UNIQUE(generation_id, page_cursor, row_no)
+);
+CREATE TABLE IF NOT EXISTS event_identity_map (
+  internal_event_id TEXT PRIMARY KEY, producer TEXT NOT NULL,
+  external_event_id TEXT NOT NULL, producer_revision INTEGER NOT NULL,
+  identity_contract TEXT NOT NULL, generation_id TEXT NOT NULL,
+  receipt_id TEXT NOT NULL, normalized_sha256 TEXT NOT NULL, supersedes TEXT,
+  UNIQUE(producer, external_event_id, producer_revision)
+);
+CREATE TABLE IF NOT EXISTS raw_semantic_links (
+  receipt_id TEXT PRIMARY KEY REFERENCES raw_receipts(receipt_id),
+  generation_id TEXT NOT NULL, internal_event_id TEXT NOT NULL,
+  semantic_event_id TEXT NOT NULL, role TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS quarantine (
+  receipt_id TEXT PRIMARY KEY, generation_id TEXT NOT NULL,
+  reason TEXT NOT NULL, detail TEXT NOT NULL, received_at TEXT NOT NULL
+);
+CREATE VIEW IF NOT EXISTS migration_cross_reference AS
+  SELECT g.generation_id, r.receipt_id, r.page_cursor, r.row_no, r.producer,
+         json_extract(r.raw_body, '$.event_id') AS external_event_id,
+         r.schema_version, r.raw_sha256, r.received_at,
+         l.internal_event_id, l.semantic_event_id, l.role,
+         q.reason AS quarantine_reason, q.detail AS quarantine_detail
+  FROM ingest_generations g
+  JOIN raw_receipts r ON r.generation_id = g.generation_id
+  LEFT JOIN raw_semantic_links l ON l.receipt_id = r.receipt_id
+  LEFT JOIN quarantine q ON q.receipt_id = r.receipt_id;
 """
 
 KIND_SUBSYSTEM = {
@@ -170,3 +211,31 @@ def ingest(conn: sqlite3.Connection, subsystem: str, events: list[dict]) -> dict
         record_decisions(conn, evaluate(conn))
     return {"inserted": inserted, "replayed": replayed, "decisions":
             conn.execute("SELECT COUNT(*) FROM current_decisions").fetchone()[0]}
+
+
+def admit_semantic_event(conn: sqlite3.Connection, subsystem: str, event: dict) -> dict:
+    """Admit one canonicalized semantic event into the source ledger.
+
+    Same event_id with the same body is an idempotent replay; a different body still
+    raises the store's event_id collision. Callers resolve producer revisions to
+    distinct internal event ids before reaching this boundary.
+    """
+    from .validate import validate_event
+    from .decisions import evaluate
+
+    validate_event(event, subsystem)
+    event_id = event["event_id"]
+    body = canonical(event)
+    sha = digest(event)
+    prior = conn.execute("SELECT sha256 FROM source_events WHERE event_id=?", (event_id,)).fetchone()
+    if prior:
+        if prior["sha256"] != sha:
+            raise ValueError(f"event_id collision: {event_id}")
+        return {"event_id": event_id, "replayed": True}
+    conn.execute(
+        "INSERT INTO source_events VALUES (?,?,?,?,?,?)",
+        (event_id, subsystem, event["kind"], event["event_at"], body, sha),
+    )
+    project(conn)
+    record_decisions(conn, evaluate(conn))
+    return {"event_id": event_id, "replayed": False}
