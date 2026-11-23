@@ -7,6 +7,41 @@ from .rights import _unique_latest
 from .store import rows
 
 
+def order_delivery_outcomes(conn) -> dict[str, dict]:
+    """Final per-order delivery outcome from the same SQLite snapshot.
+
+    Built for the privacy research release: parcels and receipts collapse by
+    identity (latest event wins, as in fulfilment accounting), and repeated
+    signings or a late return after signing merge into one outcome per order,
+    so one order never counts as two people. Only receipts witnessed by the
+    order's own consumer count, mirroring fulfilment_accounts. The outcome
+    keeps the exact received_at for internal use; the release layer is
+    responsible for generalising it before anything is published.
+    """
+    orders, _ = _unique_latest(
+        rows(conn, "orders"), "order_id", ("offer_id", "units", "placed_at", "consumer"))
+    parcels, _ = _unique_latest(
+        rows(conn, "parcels"), "parcel_id", ("order_id", "batch_id", "units", "dispatched_at", "carrier"))
+    receipts, _ = _unique_latest(
+        rows(conn, "receipts"), "receipt_id", ("parcel_id", "units", "receipt_type", "received_at", "witness"))
+    parcel_order = {parcel_id: parcel["order_id"] for parcel_id, parcel in parcels.items()}
+    by_order = defaultdict(list)
+    for receipt in receipts.values():
+        order_id = parcel_order.get(receipt["parcel_id"])
+        order = orders.get(order_id) if order_id else None
+        if order and receipt["witness"] == order["consumer"]:
+            by_order[order_id].append(receipt)
+    outcomes = {}
+    for order_id, order_receipts in by_order.items():
+        latest = max((r["received_at"], r["receipt_id"]) for r in order_receipts)[0]
+        outcomes[order_id] = {
+            "status": "returned" if any(r["receipt_type"] == "returned" for r in order_receipts) else "signed",
+            "received_at": latest,
+            "receipt_ids": sorted(r["receipt_id"] for r in order_receipts),
+        }
+    return outcomes
+
+
 def fulfilment_accounts(conn, offers: dict[str, dict], orders: dict[str, dict], as_of: str,
                        restocked_by_order: dict[str, int] | None = None) -> dict[str, dict]:
     parcels, parcel_conflicts = _unique_latest(

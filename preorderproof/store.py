@@ -60,6 +60,26 @@ CREATE TABLE IF NOT EXISTS decision_history (
 );
 """
 
+# Controlled mapping store for the privacy release protocol. Original order
+# identifiers and the fixed consumer tokens live only here; published research
+# releases never carry them. Releases are append-only: an old version is never
+# withdrawn, because a researcher who already holds it must be assumed to
+# remember it.
+MAPPING_SCHEMA = """
+CREATE TABLE IF NOT EXISTS privacy_mapping (
+  consumer_token TEXT PRIMARY KEY, consumer TEXT NOT NULL, order_ids TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS privacy_cohorts (
+  route TEXT NOT NULL, cohort_id TEXT NOT NULL, purchase_week TEXT NOT NULL,
+  seq INTEGER NOT NULL, state TEXT NOT NULL, members TEXT NOT NULL,
+  PRIMARY KEY(route, cohort_id)
+);
+CREATE TABLE IF NOT EXISTS privacy_releases (
+  version TEXT PRIMARY KEY, route TEXT NOT NULL, as_of TEXT NOT NULL,
+  body TEXT NOT NULL, sha256 TEXT NOT NULL
+);
+"""
+
 KIND_SUBSYSTEM = {
     "offer": "offer", "batch": "offer", "restock": "offer", "order": "payment",
     "payment": "payment", "consent": "payment", "parcel": "delivery",
@@ -87,6 +107,21 @@ def connect(db: str | Path) -> sqlite3.Connection:
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
     conn.executescript(SCHEMA)
+    return conn
+
+
+def connect_mapping(db: str | Path) -> sqlite3.Connection:
+    """Open the controlled mapping store for privacy releases.
+
+    This database is the only place where original order ids, consumer names
+    and their fixed tokens may coexist; it never leaves the publisher's hands.
+    """
+    db = str(db)
+    if db != ":memory:":
+        Path(db).parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(db)
+    conn.row_factory = sqlite3.Row
+    conn.executescript(MAPPING_SCHEMA)
     return conn
 
 

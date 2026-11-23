@@ -1,0 +1,39 @@
+{
+  "description": "隐私发布夹具：base_v1 是 C1/C2 同周两单两包裹两回执（11-03 退货为 C1，11-04 签收为 C2，二人同地区同周）；late_c3 是晚到同周下单且退货的 C3；late_c4 是路线 B 等待的同周新增者 C4；duplicate_receipts 是 C2 的重复签收与晚到退货。订单经 payment 子系统导入，包裹与回执经 delivery 子系统导入，发布层从同一 SQLite 截面读取三张业务表。",
+  "base_v1": {
+    "payment": [
+      {"event_id": "porder-1", "event_at": "2026-11-02", "kind": "order", "order_id": "C1", "offer_id": "O1", "units": 1, "placed_at": "2026-11-02", "consumer": "alice"},
+      {"event_id": "porder-2", "event_at": "2026-11-02", "kind": "order", "order_id": "C2", "offer_id": "O1", "units": 1, "placed_at": "2026-11-02", "consumer": "bob"}
+    ],
+    "delivery": [
+      {"event_id": "pparcel-1", "event_at": "2026-11-02", "kind": "parcel", "parcel_id": "P1", "order_id": "C1", "batch_id": "B1", "units": 1, "dispatched_at": "2026-11-02", "carrier": "carrier-1"},
+      {"event_id": "pparcel-2", "event_at": "2026-11-02", "kind": "parcel", "parcel_id": "P2", "order_id": "C2", "batch_id": "B1", "units": 1, "dispatched_at": "2026-11-02", "carrier": "carrier-1"},
+      {"event_id": "preceipt-1r", "event_at": "2026-11-05", "kind": "receipt", "receipt_id": "R1r", "parcel_id": "P1", "units": 1, "receipt_type": "returned", "received_at": "2026-11-03", "witness": "alice"},
+      {"event_id": "preceipt-2s", "event_at": "2026-11-05", "kind": "receipt", "receipt_id": "R2s", "parcel_id": "P2", "units": 1, "receipt_type": "signed", "received_at": "2026-11-04", "witness": "bob"}
+    ]
+  },
+  "late_c3": {
+    "payment": [
+      {"event_id": "porder-3", "event_at": "2026-11-18", "kind": "order", "order_id": "C3", "offer_id": "O1", "units": 1, "placed_at": "2026-11-05", "consumer": "carol"}
+    ],
+    "delivery": [
+      {"event_id": "pparcel-3", "event_at": "2026-11-18", "kind": "parcel", "parcel_id": "P3", "order_id": "C3", "batch_id": "B1", "units": 1, "dispatched_at": "2026-11-06", "carrier": "carrier-1"},
+      {"event_id": "preceipt-3r", "event_at": "2026-11-18", "kind": "receipt", "receipt_id": "R3r", "parcel_id": "P3", "units": 1, "receipt_type": "returned", "received_at": "2026-11-06", "witness": "carol"}
+    ]
+  },
+  "late_c4": {
+    "payment": [
+      {"event_id": "porder-4", "event_at": "2026-11-19", "kind": "order", "order_id": "C4", "offer_id": "O1", "units": 1, "placed_at": "2026-11-06", "consumer": "dan"}
+    ],
+    "delivery": [
+      {"event_id": "pparcel-4", "event_at": "2026-11-19", "kind": "parcel", "parcel_id": "P4", "order_id": "C4", "batch_id": "B1", "units": 1, "dispatched_at": "2026-11-07", "carrier": "carrier-1"},
+      {"event_id": "preceipt-4s", "event_at": "2026-11-19", "kind": "receipt", "receipt_id": "R4s", "parcel_id": "P4", "units": 1, "receipt_type": "signed", "received_at": "2026-11-07", "witness": "dan"}
+    ]
+  },
+  "duplicate_receipts": {
+    "delivery": [
+      {"event_id": "preceipt-2s2", "event_at": "2026-11-06", "kind": "receipt", "receipt_id": "R2s2", "parcel_id": "P2", "units": 1, "receipt_type": "signed", "received_at": "2026-11-04", "witness": "bob"},
+      {"event_id": "preceipt-2r", "event_at": "2026-11-11", "kind": "receipt", "receipt_id": "R2r", "parcel_id": "P2", "units": 1, "receipt_type": "returned", "received_at": "2026-11-10", "witness": "bob"}
+    ]
+  }
+}
