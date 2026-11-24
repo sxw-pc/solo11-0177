@@ -1,0 +1,22 @@
+[
+  {"event_id":"tc-thin","event_at":"2026-11-15","kind":"thermal_calibration","calibration_id":"CAL-THIN","packaging":"thin","tau_minutes":40.0,"calibrated_at":"2026-11-15T10:00:00","lab":"thermal-lab-1"},
+  {"event_id":"tc-thick","event_at":"2026-11-15","kind":"thermal_calibration","calibration_id":"CAL-THICK","packaging":"thick","tau_minutes":80.0,"calibrated_at":"2026-11-15T10:00:00","lab":"thermal-lab-1"},
+  {"event_id":"sp-1","event_at":"2026-11-19","kind":"sensor_placement","placement_id":"SP-1","box_id":"BOX1","sensor":"S1","position":"shell","positioned_at":"2026-11-19T09:00:00"},
+  {"event_id":"sp-2","event_at":"2026-11-19","kind":"sensor_placement","placement_id":"SP-2","box_id":"BOX2","sensor":"S2","position":"shell","positioned_at":"2026-11-19T09:00:00"},
+  {"event_id":"sp-3","event_at":"2026-11-19","kind":"sensor_placement","placement_id":"SP-3","box_id":"BOX3","sensor":"S3","position":"shell","positioned_at":"2026-11-19T09:00:00"},
+  {"event_id":"sm-1","event_at":"2026-11-19","kind":"slot_mapping","mapping_id":"SM-1","box_id":"BOX1","recorder":"F1","slot":"A1","mapped_at":"2026-11-19T09:00:00"},
+  {"event_id":"sm-2","event_at":"2026-11-19","kind":"slot_mapping","mapping_id":"SM-2","box_id":"BOX2","recorder":"F1","slot":"A2","mapped_at":"2026-11-19T09:00:00"},
+  {"event_id":"sm-3","event_at":"2026-11-19","kind":"slot_mapping","mapping_id":"SM-3","box_id":"BOX3","recorder":"F1","slot":"A3","mapped_at":"2026-11-19T09:00:00"},
+  {"event_id":"ec-1","event_at":"2026-11-19","kind":"exposure_certificate","certificate_id":"EC-1","batch_id":"B1","box_id":"BOX1","units":1,"packaging":"thin","core_limit_c":8.0,"max_over_minutes":5,"issuer":"warehouse-qc-1"},
+  {"event_id":"ec-2","event_at":"2026-11-19","kind":"exposure_certificate","certificate_id":"EC-2","batch_id":"B1","box_id":"BOX2","units":1,"packaging":"thin","core_limit_c":8.0,"max_over_minutes":5,"issuer":"warehouse-qc-1"},
+  {"event_id":"ec-3","event_at":"2026-11-19","kind":"exposure_certificate","certificate_id":"EC-3","batch_id":"B1","box_id":"BOX3","units":1,"packaging":"thick","core_limit_c":8.0,"max_over_minutes":5,"issuer":"warehouse-qc-1"},
+  {"event_id":"cc-f1","event_at":"2026-11-20","kind":"clock_calibration","calibration_id":"CC-F1","recorder":"F1","calibrated_at":"2026-11-20T07:00:00","offset_seconds":0},
+  {"event_id":"tp-1","event_at":"2026-11-20","kind":"temp_page","page_id":"F1-b0-p1","recorder":"F1","boot":0,"page_no":1,"observed_at":"2026-11-20T07:40:00","ambient_c":4.0},
+  {"event_id":"tp-2","event_at":"2026-11-20","kind":"temp_page","page_id":"F1-b0-p2","recorder":"F1","boot":0,"page_no":2,"observed_at":"2026-11-20T07:45:00","ambient_c":4.0},
+  {"event_id":"tp-3","event_at":"2026-11-20","kind":"temp_page","page_id":"F1-b0-p3","recorder":"F1","boot":0,"page_no":3,"observed_at":"2026-11-20T07:50:00","ambient_c":4.0},
+  {"event_id":"tp-4","event_at":"2026-11-20","kind":"temp_page","page_id":"F1-b0-p4","recorder":"F1","boot":0,"page_no":4,"observed_at":"2026-11-20T07:55:00","ambient_c":4.0},
+  {"event_id":"tp-5","event_at":"2026-11-20","kind":"temp_page","page_id":"F1-b0-p5","recorder":"F1","boot":0,"page_no":5,"observed_at":"2026-11-20T08:00:00","ambient_c":4.0},
+  {"event_id":"tp-6","event_at":"2026-11-20","kind":"temp_page","page_id":"F1-b1-p1","recorder":"F1","boot":1,"page_no":1,"observed_at":"2026-11-20T08:20:00","ambient_c":4.0},
+  {"event_id":"tp-7","event_at":"2026-11-20","kind":"temp_page","page_id":"F1-b1-p2","recorder":"F1","boot":1,"page_no":2,"observed_at":"2026-11-20T08:25:00","ambient_c":4.0},
+  {"event_id":"tp-8","event_at":"2026-11-20","kind":"temp_page","page_id":"F1-b1-p3","recorder":"F1","boot":1,"page_no":3,"observed_at":"2026-11-20T08:30:00","ambient_c":4.0}
+]

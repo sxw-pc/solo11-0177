@@ -1,4 +1,9 @@
-"""Consumer deposit, balance, consent, and capacity rights."""
+"""Consumer deposit, balance, consent, and capacity rights.
+
+Orders that cannot be placed while cold-chain evidence is unresolved become
+"cold_chain_pending": the promise is deferred, not cancelled, and recomputed
+when the eligibility source version changes.
+"""
 from __future__ import annotations
 
 from collections import defaultdict
@@ -80,7 +85,9 @@ def order_accounts(conn, offers: dict[str, dict], as_of: str,
         for order_id, acc in sorted(candidates, key=lambda item: (item[1]["deposit_at"], item[0])):
             units = acc["order"]["units"]
             if remaining < units:
-                acc["status"] = "paid_waitlist"
+                # A shortage while cold-chain evidence is unresolved defers the promise
+                # instead of cancelling it; a resolved shortage waitlists as before.
+                acc["status"] = "cold_chain_pending" if state.get("temperature_pending") else "paid_waitlist"
                 continue
             remaining -= units
             acc["allocated"] = True

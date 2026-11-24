@@ -50,6 +50,42 @@ CREATE TABLE IF NOT EXISTS receipts (
   units INTEGER NOT NULL, receipt_type TEXT NOT NULL, received_at TEXT NOT NULL,
   witness TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS temp_pages (
+  event_id TEXT PRIMARY KEY, page_id TEXT NOT NULL, recorder TEXT NOT NULL,
+  boot INTEGER NOT NULL, page_no INTEGER NOT NULL, observed_at TEXT NOT NULL,
+  ambient_c REAL NOT NULL
+);
+CREATE TABLE IF NOT EXISTS clock_calibrations (
+  event_id TEXT PRIMARY KEY, calibration_id TEXT NOT NULL, recorder TEXT NOT NULL,
+  calibrated_at TEXT NOT NULL, offset_seconds INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS sensor_placements (
+  event_id TEXT PRIMARY KEY, placement_id TEXT NOT NULL, box_id TEXT NOT NULL,
+  sensor TEXT NOT NULL, position TEXT NOT NULL, positioned_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS slot_mappings (
+  event_id TEXT PRIMARY KEY, mapping_id TEXT NOT NULL, box_id TEXT NOT NULL,
+  recorder TEXT NOT NULL, slot TEXT NOT NULL, mapped_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS exposure_certificates (
+  event_id TEXT PRIMARY KEY, certificate_id TEXT NOT NULL, batch_id TEXT NOT NULL,
+  box_id TEXT NOT NULL, units INTEGER NOT NULL, packaging TEXT NOT NULL,
+  core_limit_c REAL NOT NULL, max_over_minutes INTEGER NOT NULL, issuer TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS thermal_calibrations (
+  event_id TEXT PRIMARY KEY, calibration_id TEXT NOT NULL, packaging TEXT NOT NULL,
+  tau_minutes REAL NOT NULL, calibrated_at TEXT NOT NULL, lab TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS buffer_samples (
+  event_id TEXT PRIMARY KEY, buffer_id TEXT NOT NULL, recorder TEXT NOT NULL,
+  observed_at TEXT NOT NULL, current_a REAL NOT NULL, ambient_c REAL NOT NULL,
+  signature TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS activity_assays (
+  event_id TEXT PRIMARY KEY, assay_id TEXT NOT NULL, batch_id TEXT NOT NULL,
+  box_id TEXT NOT NULL, units_consumed INTEGER NOT NULL, outcome TEXT NOT NULL,
+  assayed_at TEXT NOT NULL, inspector TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS current_decisions (
   subject TEXT PRIMARY KEY, decision TEXT NOT NULL, evidence_hash TEXT NOT NULL,
   revision INTEGER NOT NULL
@@ -63,7 +99,11 @@ CREATE TABLE IF NOT EXISTS decision_history (
 KIND_SUBSYSTEM = {
     "offer": "offer", "batch": "offer", "restock": "offer", "order": "payment",
     "payment": "payment", "consent": "payment", "parcel": "delivery",
-    "receipt": "delivery",
+    "receipt": "delivery", "temp_page": "temperature",
+    "clock_calibration": "temperature", "sensor_placement": "temperature",
+    "slot_mapping": "temperature", "exposure_certificate": "temperature",
+    "thermal_calibration": "temperature", "buffer_sample": "temperature",
+    "activity_assay": "temperature",
 }
 
 PROJECTIONS = {
@@ -76,7 +116,21 @@ PROJECTIONS = {
     "consent": ("consents", "order_id", "due", "accepted_at", "consumer"),
     "parcel": ("parcels", "parcel_id", "order_id", "batch_id", "units", "dispatched_at", "carrier"),
     "receipt": ("receipts", "receipt_id", "parcel_id", "units", "receipt_type", "received_at", "witness"),
+    "temp_page": ("temp_pages", "page_id", "recorder", "boot", "page_no", "observed_at", "ambient_c"),
+    "clock_calibration": ("clock_calibrations", "calibration_id", "recorder", "calibrated_at", "offset_seconds"),
+    "sensor_placement": ("sensor_placements", "placement_id", "box_id", "sensor", "position", "positioned_at"),
+    "slot_mapping": ("slot_mappings", "mapping_id", "box_id", "recorder", "slot", "mapped_at"),
+    "exposure_certificate": ("exposure_certificates", "certificate_id", "batch_id", "box_id", "units",
+                             "packaging", "core_limit_c", "max_over_minutes", "issuer"),
+    "thermal_calibration": ("thermal_calibrations", "calibration_id", "packaging", "tau_minutes",
+                            "calibrated_at", "lab"),
+    "buffer_sample": ("buffer_samples", "buffer_id", "recorder", "observed_at", "current_a",
+                      "ambient_c", "signature"),
+    "activity_assay": ("activity_assays", "assay_id", "batch_id", "box_id", "units_consumed",
+                       "outcome", "assayed_at", "inspector"),
 }
+
+TABLES = {spec[0] for spec in PROJECTIONS.values()}
 
 
 def connect(db: str | Path) -> sqlite3.Connection:
@@ -99,7 +153,7 @@ def digest(value: object) -> str:
 
 
 def rows(conn: sqlite3.Connection, table: str) -> list[dict]:
-    if table not in {"offers", "batches", "restocks", "orders", "payments", "consents", "parcels", "receipts"}:
+    if table not in TABLES:
         raise ValueError("unknown table")
     return [dict(row) for row in conn.execute(f"SELECT * FROM {table} ORDER BY event_id")]
 

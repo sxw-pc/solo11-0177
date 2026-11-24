@@ -1,14 +1,16 @@
-"""Cross-ledger verdicts with ten separately observable decision surfaces."""
+"""Cross-ledger verdicts with separately observable decision surfaces."""
 from __future__ import annotations
 
 from .delivery import fulfilment_accounts
 from .offer import offer_accounts
-from .rights import order_accounts
 from .recovery import inspected_returns
+from .rights import order_accounts
+from .temperature import temperature_accounts
 
 
 def evaluate(conn) -> dict[str, dict]:
-    offers = offer_accounts(conn)
+    temperature = temperature_accounts(conn)
+    offers = offer_accounts(conn, temperature)
     last_event = conn.execute("SELECT MAX(event_at) FROM source_events").fetchone()[0] or "0001-01-01"
     rights = order_accounts(conn, offers, last_event)
     fulfilment = fulfilment_accounts(conn, offers, rights, last_event)
@@ -17,6 +19,10 @@ def evaluate(conn) -> dict[str, dict]:
         rights = order_accounts(conn, offers, last_event, recovered)
         fulfilment = fulfilment_accounts(conn, offers, rights, last_event, restocked_by_order)
     result = {}
+    for batch_id, assessment in temperature.items():
+        result[f"temperature:{batch_id}"] = {
+            "subject": batch_id, "kind": "temperature", **assessment,
+        }
     for offer_id, state in offers.items():
         offer = state["offer"]
         result[f"offer:{offer_id}"] = {
@@ -28,6 +34,7 @@ def evaluate(conn) -> dict[str, dict]:
                 "changed_due_requires_consent": state["due_change_days"] > offer["grace_days"],
             },
             "capacity": state["capacity"],
+            "temperature": state["temperature"],
             "recovered_capacity": recovered.get(offer_id, 0),
             "unallocated_capacity": state.get("unallocated_capacity", state["capacity"]),
             "restock_reviews": [x for x in recovery_log if x.get("offer_id") == offer_id],
@@ -47,6 +54,7 @@ def evaluate(conn) -> dict[str, dict]:
                 "parcel_matches_frozen_batch": bool(fulfil["valid_parcels"]),
                 "partial_receipt_keeps_obligation": 0 < fulfil["delivered_units"] < fulfil["ordered_units"],
                 "late_return_reopens_refund": fulfil["returned_units"] > 0 and fulfil["refund_due"] > 0,
+                "cold_chain_pending": right["status"] == "cold_chain_pending",
             },
             "paid_total": right["paid_total"],
             "consent_required": right["consent_required"],

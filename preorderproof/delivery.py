@@ -6,6 +6,16 @@ from collections import defaultdict
 from .rights import _unique_latest
 from .store import rows
 
+# Losses that void the delivery right itself (recall, conflict, expiry, fraud).
+HARD_RIGHT_LOSS = {
+    "promise_version_conflict", "offer_withdrawn", "batch_conflict", "batch_unavailable",
+    "new_due_unaccepted", "order_conflict", "unknown_offer",
+    "deposit_missing_or_late", "tail_expired",
+}
+# A paid order that merely lost the capacity race keeps the parcels it already
+# received; redistributed capacity recomputes unshipped promises only.
+SOFT_RIGHT_LOSS = {"paid_waitlist"}
+
 
 def fulfilment_accounts(conn, offers: dict[str, dict], orders: dict[str, dict], as_of: str,
                        restocked_by_order: dict[str, int] | None = None) -> dict[str, dict]:
@@ -37,7 +47,7 @@ def fulfilment_accounts(conn, offers: dict[str, dict], orders: dict[str, dict], 
                 reason = "parcel_identity_conflict"
             elif not offer_state or parcel["batch_id"] != offer_state["offer"]["batch_id"]:
                 reason = "wrong_batch"
-            elif not right["allocated"] or not right["tail_ok"]:
+            elif not right["tail_ok"] or right["status"] in HARD_RIGHT_LOSS:
                 reason = "no_paid_delivery_right"
             elif parcel["carrier"] in {"merchant", "unwitnessed"}:
                 reason = "no_independent_carrier"
@@ -67,14 +77,16 @@ def fulfilment_accounts(conn, offers: dict[str, dict], orders: dict[str, dict], 
         price = offer_state["offer"]["price"] if offer_state else 0
         # Amounts are minor currency units. A lost right refunds the paid balance;
         # an otherwise valid but late part earns a bounded contract remedy.
-        right_lost = right["status"] in {
-            "promise_version_conflict", "offer_withdrawn", "batch_conflict", "batch_unavailable",
-            "new_due_unaccepted", "order_conflict", "paid_waitlist", "unknown_offer",
-            "deposit_missing_or_late", "tail_expired",
-        }
-        refund_due = right["paid_total"] if right_lost else min(
-            right["paid_total"], restocked * price + (outstanding * price if past_due else 0)
-        )
+        right_lost = right["status"] in HARD_RIGHT_LOSS | SOFT_RIGHT_LOSS
+        if right_lost:
+            # A capacity reshuffle refunds only units that were never delivered;
+            # harder losses (recall, conflict, expiry) refund the whole balance.
+            refund_due = (max(0, right["paid_total"] - delivered * price)
+                          if right["status"] in SOFT_RIGHT_LOSS else right["paid_total"])
+        else:
+            refund_due = min(
+                right["paid_total"], restocked * price + (outstanding * price if past_due else 0)
+            )
         compensation = min(outstanding * price // 10, 5000) if past_due and right["allocated"] and right["tail_ok"] else 0
         status = ("refund_due" if right_lost and right["paid_total"] else
                   "right_blocked" if right_lost else

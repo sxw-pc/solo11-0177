@@ -5,9 +5,11 @@ from collections import defaultdict
 from datetime import date
 
 from .store import rows
+from .temperature import temperature_accounts
 
 
-def offer_accounts(conn) -> dict[str, dict]:
+def offer_accounts(conn, temperature: dict[str, dict] | None = None) -> dict[str, dict]:
+    temperature = temperature_accounts(conn) if temperature is None else temperature
     versions = defaultdict(list)
     for row in rows(conn, "offers"):
         versions[row["offer_id"]].append(row)
@@ -31,6 +33,12 @@ def offer_accounts(conn) -> dict[str, dict]:
         lot_conflict = len({(x["quantity"], x["certified_until"], x["status"]) for x in same_time}) > 1
         lot_valid = bool(lot and not lot_conflict and lot["status"] == "good"
                          and date.fromisoformat(lot["certified_until"]) >= date.fromisoformat(offer["due"]))
+        assessment = temperature.get(offer["batch_id"])
+        # Cold-chain evidence, not the merchant's declaration, bounds how many units
+        # may still be promised; the declaration itself stays untouched in the ledger.
+        effective_quantity = lot["quantity"] if lot else 0
+        if assessment:
+            effective_quantity = min(effective_quantity, assessment["deliverable_units"])
         active = not conflict and offer["status"] == "active" and lot_valid
         previous = [x for x in events if x["version"] < top_version]
         previous_due = sorted(previous, key=lambda x: (x["version"], x["event_at"]))[-1]["due"] if previous else None
@@ -38,7 +46,18 @@ def offer_accounts(conn) -> dict[str, dict]:
         result[offer_id] = {
             "offer": offer, "lot": lot, "version_conflict": conflict,
             "lot_conflict": lot_conflict, "lot_valid": lot_valid,
-            "active": active, "capacity": min(offer["capacity"], lot["quantity"]) if active else 0,
+            "active": active, "capacity": min(offer["capacity"], effective_quantity) if active else 0,
+            "temperature_pending": bool(assessment and assessment["status"] != "resolved"),
+            "temperature": None if not assessment else {
+                "status": assessment["status"],
+                "resolution": assessment["resolution"],
+                "deliverable_units": assessment["deliverable_units"],
+                "deliverable_range": assessment["deliverable_range"],
+                "proven_ok_units": assessment["proven_ok_units"],
+                "suspect_units": assessment["suspect_units"],
+                "pending_retest_units": assessment["pending_retest_units"],
+                "liability_evidence": assessment["liability_evidence"],
+            },
             "previous_due": previous_due, "due_change_days": due_change,
             "reason": "promise_version_conflict" if conflict else
                       "offer_withdrawn" if offer["status"] != "active" else

@@ -11,7 +11,8 @@ from .audit import audit, report
 from .store import connect, ingest
 
 ROOT = Path(__file__).resolve().parent.parent
-COMMANDS = {"offer-import": "offer", "payment-import": "payment", "delivery-import": "delivery"}
+COMMANDS = {"offer-import": "offer", "payment-import": "payment", "delivery-import": "delivery",
+            "temperature-import": "temperature"}
 
 
 def print_json(value: object) -> None:
