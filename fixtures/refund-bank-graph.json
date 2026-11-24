@@ -1,0 +1,136 @@
+{
+  "batch_id": "batch-RF-2026-11",
+  "recorded_at": "2026-11-24T10:00:00Z",
+  "claims": [
+    {
+      "record_id": "CL-D1", "kind": "merchant_refund_claim",
+      "order_id": "D1", "amount": 300, "account_mask": "ACCT-FAM-01",
+      "batch_id": "batch-RF-2026-11", "status": "valid",
+      "snapshot": {"source": "delivery.refund_due", "order_id": "D1", "refund_due": 300, "snapshot_at": "2026-11-20"},
+      "page_ref": {"document": "merchant-claims.csv", "page": 1, "rect": [120, 88, 540, 132],
+                   "seal_digest": "3594a8eeba7edb383cc2f6290039376f05da625f03688ebb4ca382af481357a1"}
+    },
+    {
+      "record_id": "CL-D2", "kind": "merchant_refund_claim",
+      "order_id": "D2", "amount": 300, "account_mask": "ACCT-FAM-01",
+      "batch_id": "batch-RF-2026-11", "status": "valid",
+      "snapshot": {"source": "delivery.refund_due", "order_id": "D2", "refund_due": 300, "snapshot_at": "2026-11-20"},
+      "page_ref": {"document": "merchant-claims.csv", "page": 1, "rect": [120, 150, 540, 194],
+                   "seal_digest": "18df2c7af273a404c5f971f1bffb6778352ae814b7ef08fb2291821a3e2b13eb"}
+    },
+    {
+      "record_id": "CL-D3", "kind": "merchant_refund_claim",
+      "order_id": "D3", "amount": 450, "account_mask": "ACCT-FAM-01",
+      "batch_id": "batch-RF-2026-11", "status": "valid",
+      "snapshot": {"source": "delivery.refund_due", "order_id": "D3", "refund_due": 450, "snapshot_at": "2026-11-20"},
+      "page_ref": {"document": "merchant-claims.csv", "page": 2, "rect": [120, 60, 540, 104],
+                   "seal_digest": "bf9c93a9060d8e476aa9162e3ba71137a142bd2e9a049f769a7d7be0930d4d26"}
+    },
+    {
+      "record_id": "CL-D4", "kind": "merchant_refund_claim",
+      "order_id": "D4", "amount": 300, "account_mask": "ACCT-FAM-01",
+      "batch_id": "batch-RF-2026-11", "status": "withdrawn",
+      "snapshot": {"source": "delivery.refund_due", "order_id": "D4", "refund_due": 300, "snapshot_at": "2026-11-19"},
+      "page_ref": {"document": "merchant-claims.csv", "page": 2, "rect": [120, 122, 540, 166],
+                   "seal_digest": "ec6a3d3501c1eeb3c30e9b0082edfa0bc52876eb6a178f1a5329b7b904fc009f"}
+    }
+  ],
+  "bank_flows": [
+    {
+      "record_id": "BK-B1", "kind": "bank_flow",
+      "txid": "B1", "account_mask": "ACCT-FAM-01", "amount": 300,
+      "batch_id": "batch-RF-2026-11", "order_code": null, "settled": true,
+      "page_ref": {"document": "bank-export.pdf", "page": 1, "rect": [80, 210, 560, 256],
+                   "seal_digest": "47a3faade9959471ea46216f7edc4558bf9c87b2743aa315151f6cb4db65f6a0"}
+    },
+    {
+      "record_id": "BK-B2", "kind": "bank_flow",
+      "txid": "B2", "account_mask": "ACCT-FAM-01", "amount": 300,
+      "batch_id": "batch-RF-2026-11", "order_code": "D1", "settled": true,
+      "page_ref": {"document": "bank-export.pdf", "page": 1, "rect": [80, 270, 560, 316],
+                   "seal_digest": "70a6a420b2358a3571c35f750b5aa878f328d1fb116f39de13906551b0bfda59"}
+    },
+    {
+      "record_id": "BK-B3-P7", "kind": "bank_flow",
+      "txid": "B3", "account_mask": "ACCT-FAM-01", "amount": 300,
+      "batch_id": "batch-RF-2026-11", "order_code": null, "settled": true,
+      "page_ref": {"document": "bank-export.pdf", "page": 7, "rect": [80, 90, 560, 136],
+                   "seal_digest": "2f2bea794c6b7366faaf2d30b6f97c8a571159762f53ba3713b985b49b2dd915"}
+    },
+    {
+      "record_id": "BK-B3-P8", "kind": "bank_flow",
+      "txid": "B3", "account_mask": "ACCT-FAM-01", "amount": 300,
+      "batch_id": "batch-RF-2026-11", "order_code": null, "settled": true,
+      "page_ref": {"document": "bank-export.pdf", "page": 8, "rect": [80, 140, 560, 186],
+                   "seal_digest": "3f4ecf8b7de99eaf07563905993aff17622e6eed23aa7df37a59c58e6d1b6941"}
+    },
+    {
+      "record_id": "BK-B4", "kind": "bank_flow",
+      "txid": "B4", "account_mask": "ACCT-FAM-01", "amount": 450,
+      "batch_id": "batch-RF-2026-11", "order_code": null, "settled": true,
+      "page_ref": {"document": "bank-export.pdf", "page": 2, "rect": [80, 200, 560, 246],
+                   "seal_digest": "600621a87d4bb526c1b7ac07e1828851b87b4fdc47cef9852061ab30be8f9a5f"}
+    },
+    {
+      "record_id": "BK-B5", "kind": "bank_flow",
+      "txid": "B5", "account_mask": "ACCT-OTHER-09", "amount": 300,
+      "batch_id": "batch-RF-2026-11", "order_code": null, "settled": true,
+      "page_ref": {"document": "bank-export.pdf", "page": 2, "rect": [80, 260, 560, 306],
+                   "seal_digest": "3be0ed3708b462578dc06b0f34ef7a8ddb3fb53b89ec7da31f7f588a72e7c098"}
+    }
+  ],
+  "account_mappings": [
+    {
+      "record_id": "AM-FAM-01", "kind": "account_mapping",
+      "account_mask": "ACCT-FAM-01", "holder": "family-holder-1",
+      "page_ref": {"document": "masked-accounts.csv", "page": 1, "rect": [60, 70, 500, 110],
+                   "seal_digest": "ef1193fea8c783ac1a9fbdb4c9e341d1ddbff8155caaf309f990d3c1fadb450e"}
+    },
+    {
+      "record_id": "AM-OTHER-09", "kind": "account_mapping",
+      "account_mask": "ACCT-OTHER-09", "holder": "holder-other-9",
+      "page_ref": {"document": "masked-accounts.csv", "page": 1, "rect": [60, 122, 500, 162],
+                   "seal_digest": "be8cafb272866198af3604898dc0c602b3dc8d654d0e2e40d5fd32a0d3c7775c"}
+    }
+  ],
+  "refund_codes": [
+    {
+      "record_id": "RC-D1-1", "kind": "refund_code",
+      "code": "D1", "order_id": "D1", "exclusive": true,
+      "page_ref": {"document": "refund-codes.csv", "page": 1, "rect": [90, 80, 480, 120],
+                   "seal_digest": "841e21533515e17c8f1e1ed56858cca5da1a5db863d62ac43c4e0a252e48429b"}
+    },
+    {
+      "record_id": "RC-D2-1", "kind": "refund_code",
+      "code": "D2", "order_id": "D2", "exclusive": true,
+      "page_ref": {"document": "refund-codes.csv", "page": 1, "rect": [90, 132, 480, 172],
+                   "seal_digest": "8fcd007e19b3d54e61e7e90f71bc2dc990e18ba02573ddd63d4d803b0d556e9a"}
+    }
+  ],
+  "authorizations": [
+    {
+      "record_id": "AU-FAM-REV", "kind": "transfer_authorization",
+      "account_mask": "ACCT-FAM-01", "holder": "family-holder-1",
+      "transferable": true, "protocol": "revocable_provisional",
+      "scope": "batch-RF-2026-11",
+      "page_ref": {"document": "holder-authorization.pdf", "page": 1, "rect": [70, 100, 520, 200],
+                   "seal_digest": "2ba6efea3abd77388a57a5bb0c8a466bcf6970b423060281b9f18153a9181bc8"}
+    },
+    {
+      "record_id": "AU-FAM-LOCK", "kind": "transfer_authorization",
+      "account_mask": "ACCT-FAM-01", "holder": "family-holder-1",
+      "transferable": false, "protocol": "non_transferable_bank_writeoff",
+      "scope": "batch-RF-2026-11",
+      "page_ref": {"document": "holder-authorization.pdf", "page": 2, "rect": [70, 100, 520, 200],
+                   "seal_digest": "a7cd99d4f3821947246bfb8b60fcc452c94f6c5665e595470a955d9c651b229b"}
+    }
+  ],
+  "revocations": [
+    {
+      "record_id": "RV-B1-1", "kind": "bank_revocation",
+      "txid": "B1",
+      "page_ref": {"document": "bank-revocations.pdf", "page": 1, "rect": [80, 110, 540, 170],
+                   "seal_digest": "88c30ea180296459fa9c6322b00ba0fdb1d577f28a036b52c7ba65a2b6b291d2"}
+    }
+  ]
+}
